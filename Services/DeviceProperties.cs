@@ -45,7 +45,7 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
         private readonly long rebuildTimeout;
         private readonly TimeSpan serviceQueryInterval = TimeSpan.FromSeconds(10);
         internal const string CACHE_COLLECTION_ID = "cache";
-        internal const string CACHE_KEY = "deviceTwinProperties";
+        internal const string CACHE_KEY = "device-twin-properties";
 
         private const string WHITELIST_TAG_PREFIX = "tags.";
         private const string WHITELIST_REPORTED_PREFIX = "reported.";
