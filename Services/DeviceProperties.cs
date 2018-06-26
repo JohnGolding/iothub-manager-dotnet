@@ -384,11 +384,11 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
         }
 
         /// <summary>
-        /// A fucntion to decide whether or not cache needs to be rebuilt based on force flag and existing
+        /// A function to decide whether or not cache needs to be rebuilt based on force flag and existing
         /// cache's validity
         /// </summary>
         /// <param name="force">A boolean flag to decide if cache needs to be rebuilt.</param>
-        /// <param name="fullNameWhitelist">An existing valueApiModel to check wherether or not cahce 
+        /// <param name="valueApiModel">An existing valueApiModel to check whether or not cache 
         /// has expired</param>
         private bool NeedBuild(bool force, ValueApiModel valueApiModel)
         {
