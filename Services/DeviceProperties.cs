@@ -119,7 +119,7 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
                 CACHE_COLLECTION_ID,
                 CACHE_KEY,
                 (c, b) => c.Rebuilding = b,
-                m => this.NeedBuild(force, m));
+                m => this.ShouldCacheRebuild(force, m));
 
             while (true)
             {
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
         /// <param name="force">A boolean flag to decide if cache needs to be rebuilt.</param>
         /// <param name="valueApiModel">An existing valueApiModel to check whether or not cache 
         /// has expired</param>
-        private bool NeedBuild(bool force, ValueApiModel valueApiModel)
+        private bool ShouldCacheRebuild(bool force, ValueApiModel valueApiModel)
         {
             if (force)
             {
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
             }
             catch
             {
-                this.log.Info("DeviceProperties will be rebuilt since the last one is broken.", () => { });
+                this.log.Info("DeviceProperties will be rebuilt because the last one is broken.", () => { });
                 return true;
             }
 
@@ -420,13 +420,13 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
             {
                 if (timstamp.AddSeconds(this.rebuildTimeout) < DateTimeOffset.UtcNow)
                 {
-                    this.log.Debug("Cache will be rebuilt since last rebuilding was timeout", () => { });
+                    this.log.Debug("Cache will be rebuilt because last rebuilding had timedout", () => { });
                     return true;
                 }
                 else
                 {
                     this.log.Debug
-                        ("Cache rebuilding skipped since it was rebuilding by other instance", () => { });
+                        ("Cache rebuilding skipped because it is being rebuilt by other instance", () => { });
                     return false;
                 }
             }
@@ -440,12 +440,12 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
 
                 if (timstamp.AddSeconds(this.ttl) < DateTimeOffset.UtcNow)
                 {
-                    this.log.Info("Cache will be rebuilt since it was expired", () => { });
+                    this.log.Info("Cache will be rebuilt because it has expired", () => { });
                     return true;
                 }
                 else
                 {
-                    this.log.Debug("Cache rebuilding skipped since it was not expired", () => { });
+                    this.log.Debug("Cache rebuilding skipped because it has not expired", () => { });
                     return false;
                 }
             }
