@@ -92,6 +92,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EAD5B7FB-8
 		docs\API_SPECS_DEVICE_PROPERTIES.md = docs\API_SPECS_DEVICE_PROPERTIES.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecurringTasksAgent.cs", "RecurringTasksAgent.cs\RecurringTasksAgent.cs.csproj", "{105B5B2E-4BDA-445E-9D6A-58EC2F6B9883}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{43C9B9D2-C5F3-4816-B1B8-CC7C4B86DFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43C9B9D2-C5F3-4816-B1B8-CC7C4B86DFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43C9B9D2-C5F3-4816-B1B8-CC7C4B86DFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105B5B2E-4BDA-445E-9D6A-58EC2F6B9883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105B5B2E-4BDA-445E-9D6A-58EC2F6B9883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105B5B2E-4BDA-445E-9D6A-58EC2F6B9883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105B5B2E-4BDA-445E-9D6A-58EC2F6B9883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
