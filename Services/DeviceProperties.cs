@@ -44,8 +44,8 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
         /// Hardcoded in appsettings.ini
         private readonly long rebuildTimeout;
         private readonly TimeSpan serviceQueryInterval = TimeSpan.FromSeconds(10);
-        internal const string CACHE_COLLECTION_ID = "cache";
-        internal const string CACHE_KEY = "device-twin-properties";
+        internal const string CACHE_COLLECTION_ID = "device-twin-properties";
+        internal const string CACHE_KEY = "cache";
 
         private const string WHITELIST_TAG_PREFIX = "tags.";
         private const string WHITELIST_REPORTED_PREFIX = "reported.";
@@ -410,9 +410,10 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.Services
                 cacheValue = JsonConvert.DeserializeObject<DevicePropertyServiceModel>(valueApiModel.Data);
                 timstamp = DateTimeOffset.Parse(valueApiModel.Metadata["$modified"]);
             }
-            catch (Exception e)
+            catch
             {
-                throw new InvalidInputException("Unable to parse valueApiModel", e);
+                this.log.Info("DeviceProperties will be rebuilt since the last one is broken.", () => { });
+                return true;
             }
 
             if (cacheValue.Rebuilding)
