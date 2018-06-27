@@ -14,13 +14,13 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.RecurringTasksAgent
 
     public class RecurringTasks : IRecurringTasks
     {
-        // When cache initialization fails, retry in few seconds
+        // When DeviceTwinProperties cache initialization fails, retry in few seconds
         private const int CACHE_INIT_RETRY_SECS = 10;
 
-        // After the cache is initialized, update it every few minutes
+        // After the DeviceTwinProperties cache is initialized, update it every few minutes
         private const int CACHE_UPDATE_SECS = 300;
 
-        // When generating the cache, allow some time to finish, at least one minute
+        // When generating the DeviceTwinProperties cache, allow some time to finish, at least one minute
         private const int CACHE_TIMEOUT_SECS = 90;
         
         private readonly IDeviceProperties deviceProperties;
@@ -46,17 +46,19 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.RecurringTasksAgent
             {
                 try
                 {
-                    this.log.Info("Creating cache...", () => { });
+                    this.log.Info("Creating DeviceTwinProperties cache...", () => { });
                     this.deviceProperties.TryRecreateListAsync().Wait(CACHE_TIMEOUT_SECS * 1000);
-                    this.log.Info("Cache created", () => { });
+                    this.log.Info("DeviceTwinProperties Cache created", () => { });
                     return;
                 }
                 catch (Exception e)
                 {
-                    this.log.Warn("Cache creation failed, will retry in few seconds", () => new { CACHE_INIT_RETRY_SECS, e });
+                    this.log.Debug("DeviceTwinProperties cache creation failed, will retry in few seconds",
+                        () => new { CACHE_INIT_RETRY_SECS, e });
                 }
 
-                this.log.Warn("Pausing thread before retrying cache creation", () => new { CACHE_INIT_RETRY_SECS });
+                this.log.Warn("Pausing thread before retrying DeviceTwinProperties cache creation",
+                    () => new { CACHE_INIT_RETRY_SECS });
                 Thread.Sleep(CACHE_INIT_RETRY_SECS * 1000);
             }
         }
@@ -65,17 +67,18 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.RecurringTasksAgent
         {
             try
             {
-                this.log.Info("Scheduling a cache update", () => new { CACHE_UPDATE_SECS });
+                this.log.Debug("Scheduling a DeviceTwinProperties cache update",
+                    () => new { CACHE_UPDATE_SECS });
                 var unused = new Timer(
                     this.UpdateCache,
                     null,
                     1000 * CACHE_UPDATE_SECS,
                     Timeout.Infinite);
-                this.log.Info("Cache update scheduled", () => new { CACHE_UPDATE_SECS });
+                this.log.Debug("DeviceTwinProperties cache update scheduled", () => new { CACHE_UPDATE_SECS });
             }
             catch (Exception e)
             {
-                this.log.Error("Cache update scheduling failed", () => new { e });
+                this.log.Error("DeviceTwinProperties cache update scheduling failed", () => new { e });
             }
         }
 
@@ -83,13 +86,14 @@ namespace Microsoft.Azure.IoTSolutions.IotHubManager.RecurringTasksAgent
         {
             try
             {
-                this.log.Info("Updating cache...", () => { });
+                this.log.Info("Updating DeviceTwinProperties cache...", () => { });
                 this.deviceProperties.TryRecreateListAsync().Wait(CACHE_TIMEOUT_SECS * 1000);
-                this.log.Info("Cache updated", () => { });
+                this.log.Info("DeviceTwinProperties cache updated", () => { });
             }
             catch (Exception e)
             {
-                this.log.Warn("Cache update failed, will retry later", () => new { CACHE_UPDATE_SECS, e });
+                this.log.Warn("DeviceTwinProperties cache update failed, will retry later",
+                    () => new { CACHE_UPDATE_SECS, e });
             }
 
             this.ScheduleCacheUpdate();
